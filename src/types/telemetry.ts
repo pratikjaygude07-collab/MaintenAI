@@ -383,3 +383,54 @@ export interface PhaseRouteBlueprint {
     description: string;
   }[];
 }
+
+// ============================================================================
+// AI4I 2020 PREDICTIVE MAINTENANCE DATASET TYPES
+// ============================================================================
+// Synthetic dataset from UCI Machine Learning Repository (CC BY 4.0).
+// Source: https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
+
+export type Ai4iMachineType = "L" | "M" | "H";
+
+export interface Ai4iTelemetryRecord {
+  id: number;
+  udi: number;
+  productId: string;
+  type: Ai4iMachineType;
+  airTemperatureK: number; // Kelvin
+  processTemperatureK: number; // Kelvin
+  rotationalSpeedRpm: number;
+  torqueNm: number; // Newton-meters
+  toolWearMin: number; // minutes
+  machineFailure: boolean;
+  twf: boolean; // Tool Wear Failure
+  hdf: boolean; // Heat Dissipation Failure
+  pwf: boolean; // Power Failure
+  osf: boolean; // Overstrain Failure
+  rnf: boolean; // Random Failure
+  dataOrigin: string;
+  isFixtureSeed: boolean;
+  importedAt: string;
+  sourceFile: string;
+  sourceDataset: string;
+}
+
+export interface Ai4iDatasetSummary {
+  totalRecords: number;
+  failureCount: number;
+  failureRate: number;
+  failureByMode: Record<string, number>;
+  recordsByType: Record<string, number>;
+  sourceDataset: string;
+  sourceUrl: string;
+  license: string;
+  isSynthetic: boolean;
+}
+
+export interface Ai4iRecordsPage {
+  records: Ai4iTelemetryRecord[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}

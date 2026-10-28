@@ -1,0 +1,2316 @@
+{
+  "id": "b435a6e4-8434-4959-8b8b-dc5e8ad5189a",
+  "prevId": "5ccc9284-6ff7-41d8-9d42-42b03b73d037",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.ai4i_telemetry_records": {
+      "name": "ai4i_telemetry_records",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "udi": {
+          "name": "udi",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "product_id": {
+          "name": "product_id",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "air_temperature_k": {
+          "name": "air_temperature_k",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "process_temperature_k": {
+          "name": "process_temperature_k",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rotational_speed_rpm": {
+          "name": "rotational_speed_rpm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "torque_nm": {
+          "name": "torque_nm",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tool_wear_min": {
+          "name": "tool_wear_min",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "machine_failure": {
+          "name": "machine_failure",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "twf": {
+          "name": "twf",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hdf": {
+          "name": "hdf",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pwf": {
+          "name": "pwf",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "osf": {
+          "name": "osf",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rnf": {
+          "name": "rnf",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'operational_telemetry'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "imported_at": {
+          "name": "imported_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "source_file": {
+          "name": "source_file",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_dataset": {
+          "name": "source_dataset",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'ai4i_2020'"
+        }
+      },
+      "indexes": {
+        "ai4i_records_udi_unique_idx": {
+          "name": "ai4i_records_udi_unique_idx",
+          "columns": [
+            {
+              "expression": "udi",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ai4i_records_product_id_idx": {
+          "name": "ai4i_records_product_id_idx",
+          "columns": [
+            {
+              "expression": "product_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ai4i_records_type_idx": {
+          "name": "ai4i_records_type_idx",
+          "columns": [
+            {
+              "expression": "type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ai4i_records_machine_failure_idx": {
+          "name": "ai4i_records_machine_failure_idx",
+          "columns": [
+            {
+              "expression": "machine_failure",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "ai4i_records_imported_at_idx": {
+          "name": "ai4i_records_imported_at_idx",
+          "columns": [
+            {
+              "expression": "imported_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.alerts": {
+      "name": "alerts",
+      "schema": "",
+      "columns": {
+        "alert_id": {
+          "name": "alert_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sector": {
+          "name": "sector",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "channel_code": {
+          "name": "channel_code",
+          "type": "varchar(96)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "severity": {
+          "name": "severity",
+          "type": "severity_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(240)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fault_signature": {
+          "name": "fault_signature",
+          "type": "varchar(240)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telemetry_reading": {
+          "name": "telemetry_reading",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "threshold_limit": {
+          "name": "threshold_limit",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ai_confidence_percent": {
+          "name": "ai_confidence_percent",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estimated_rul_hours": {
+          "name": "estimated_rul_hours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "detected_relative": {
+          "name": "detected_relative",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "detected_utc": {
+          "name": "detected_utc",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "detected_at": {
+          "name": "detected_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "recommended_action": {
+          "name": "recommended_action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "acknowledged": {
+          "name": "acknowledged",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "fixture_note": {
+          "name": "fixture_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Illustrative development fixture record — not a live operational alert.'"
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {
+        "alerts_machine_severity_idx": {
+          "name": "alerts_machine_severity_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "severity",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "alerts_detected_at_idx": {
+          "name": "alerts_detected_at_idx",
+          "columns": [
+            {
+              "expression": "detected_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "alerts_machine_id_machines_machine_id_fk": {
+          "name": "alerts_machine_id_machines_machine_id_fk",
+          "tableFrom": "alerts",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.dashboard_kpi_metrics": {
+      "name": "dashboard_kpi_metrics",
+      "schema": "",
+      "columns": {
+        "metric_id": {
+          "name": "metric_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unit": {
+          "name": "unit",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "delta_text": {
+          "name": "delta_text",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delta_tone": {
+          "name": "delta_tone",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "threshold_text": {
+          "name": "threshold_text",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "severity_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.diagnostic_findings": {
+      "name": "diagnostic_findings",
+      "schema": "",
+      "columns": {
+        "finding_id": {
+          "name": "finding_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "affected_component": {
+          "name": "affected_component",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "component_code": {
+          "name": "component_code",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(240)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "severity": {
+          "name": "severity",
+          "type": "diagnostic_severity",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "diagnostic_finding_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'open'"
+        },
+        "supporting_evidence": {
+          "name": "supporting_evidence",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sensor_readings_summary": {
+          "name": "sensor_readings_summary",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "threshold_reference": {
+          "name": "threshold_reference",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recommended_next_action": {
+          "name": "recommended_next_action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_updated_utc": {
+          "name": "last_updated_utc",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_updated_relative": {
+          "name": "last_updated_relative",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "fixture_disclaimer": {
+          "name": "fixture_disclaimer",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Illustrative frontend fixture record — not a live AI or verified engineering diagnosis.'"
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {
+        "diagnostic_findings_machine_sev_status_idx": {
+          "name": "diagnostic_findings_machine_sev_status_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "severity",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "diagnostic_findings_machine_id_machines_machine_id_fk": {
+          "name": "diagnostic_findings_machine_id_machines_machine_id_fk",
+          "tableFrom": "diagnostic_findings",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.machine_events": {
+      "name": "machine_events",
+      "schema": "",
+      "columns": {
+        "event_id": {
+          "name": "event_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_scope": {
+          "name": "event_scope",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "severity": {
+          "name": "severity",
+          "type": "event_severity",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'info'"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(240)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp_utc": {
+          "name": "timestamp_utc",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "relative_time": {
+          "name": "relative_time",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "occurred_at": {
+          "name": "occurred_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {
+        "machine_events_machine_scope_idx": {
+          "name": "machine_events_machine_scope_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "event_scope",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "machine_events_occurred_at_idx": {
+          "name": "machine_events_occurred_at_idx",
+          "columns": [
+            {
+              "expression": "occurred_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "machine_events_machine_id_machines_machine_id_fk": {
+          "name": "machine_events_machine_id_machines_machine_id_fk",
+          "tableFrom": "machine_events",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.machine_sub_assemblies": {
+      "name": "machine_sub_assemblies",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sub_assembly_key": {
+          "name": "sub_assembly_key",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "severity_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'nominal'"
+        },
+        "temperature_c": {
+          "name": "temperature_c",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vibration_rms": {
+          "name": "vibration_rms",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "material_spec": {
+          "name": "material_spec",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "machine_sub_assembly_unique_idx": {
+          "name": "machine_sub_assembly_unique_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "sub_assembly_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "machine_sub_assemblies_machine_idx": {
+          "name": "machine_sub_assemblies_machine_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "machine_sub_assemblies_machine_id_machines_machine_id_fk": {
+          "name": "machine_sub_assemblies_machine_id_machines_machine_id_fk",
+          "tableFrom": "machine_sub_assemblies",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.machines": {
+      "name": "machines",
+      "schema": "",
+      "columns": {
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "plant_code": {
+          "name": "plant_code",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "machine_name": {
+          "name": "machine_name",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "machine_type": {
+          "name": "machine_type",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subsystem": {
+          "name": "subsystem",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Rotating Machinery'"
+        },
+        "rotor_configuration": {
+          "name": "rotor_configuration",
+          "type": "rotor_configuration",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'turbine'"
+        },
+        "location_zone": {
+          "name": "location_zone",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "operating_status": {
+          "name": "operating_status",
+          "type": "fleet_operating_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'operational'"
+        },
+        "severity_status": {
+          "name": "severity_status",
+          "type": "severity_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'nominal'"
+        },
+        "health_score": {
+          "name": "health_score",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "temperature_c": {
+          "name": "temperature_c",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "temp_threshold_warning": {
+          "name": "temp_threshold_warning",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "temp_threshold_critical": {
+          "name": "temp_threshold_critical",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vibration_rms": {
+          "name": "vibration_rms",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vib_threshold_warning": {
+          "name": "vib_threshold_warning",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vib_threshold_critical": {
+          "name": "vib_threshold_critical",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rpm": {
+          "name": "rpm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rpm_nominal": {
+          "name": "rpm_nominal",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rpm_min_band": {
+          "name": "rpm_min_band",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "rpm_max_band": {
+          "name": "rpm_max_band",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 20000
+        },
+        "acoustic_db": {
+          "name": "acoustic_db",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 70
+        },
+        "acoustic_threshold_warning": {
+          "name": "acoustic_threshold_warning",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 82
+        },
+        "acoustic_threshold_critical": {
+          "name": "acoustic_threshold_critical",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 90
+        },
+        "operating_hours": {
+          "name": "operating_hours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 10000
+        },
+        "rul_hours": {
+          "name": "rul_hours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "needs_attention": {
+          "name": "needs_attention",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "active_fault_signature": {
+          "name": "active_fault_signature",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "maintenance_status": {
+          "name": "maintenance_status",
+          "type": "fleet_maintenance_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'up_to_date'"
+        },
+        "maintenance_label": {
+          "name": "maintenance_label",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "next_maintenance_window": {
+          "name": "next_maintenance_window",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assigned_team": {
+          "name": "assigned_team",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lead_technician": {
+          "name": "lead_technician",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "work_order_id": {
+          "name": "work_order_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "diagnostic_review_status": {
+          "name": "diagnostic_review_status",
+          "type": "diagnostic_review_state",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'verified_baseline'"
+        },
+        "diagnostic_review_label": {
+          "name": "diagnostic_review_label",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Baseline Verified'"
+        },
+        "sensor_channels_count": {
+          "name": "sensor_channels_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 8
+        },
+        "gateway_node": {
+          "name": "gateway_node",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_update_relative": {
+          "name": "last_update_relative",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_update_utc": {
+          "name": "last_update_utc",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_telemetry_at": {
+          "name": "last_telemetry_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "machines_plant_status_idx": {
+          "name": "machines_plant_status_idx",
+          "columns": [
+            {
+              "expression": "plant_code",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "operating_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "machines_health_score_idx": {
+          "name": "machines_health_score_idx",
+          "columns": [
+            {
+              "expression": "health_score",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "machines_needs_attention_idx": {
+          "name": "machines_needs_attention_idx",
+          "columns": [
+            {
+              "expression": "needs_attention",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "machines_plant_code_sites_plant_code_fk": {
+          "name": "machines_plant_code_sites_plant_code_fk",
+          "tableFrom": "machines",
+          "tableTo": "sites",
+          "columnsFrom": [
+            "plant_code"
+          ],
+          "columnsTo": [
+            "plant_code"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.maintenance_recommendations": {
+      "name": "maintenance_recommendations",
+      "schema": "",
+      "columns": {
+        "recommendation_id": {
+          "name": "recommendation_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "associated_component": {
+          "name": "associated_component",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action_title": {
+          "name": "action_title",
+          "type": "varchar(240)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "priority": {
+          "name": "priority",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "supporting_reason": {
+          "name": "supporting_reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "suggested_status": {
+          "name": "suggested_status",
+          "type": "recommendation_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending_review'"
+        },
+        "completion_status": {
+          "name": "completion_status",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "estimated_window": {
+          "name": "estimated_window",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "linked_finding_id": {
+          "name": "linked_finding_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "work_order_ref": {
+          "name": "work_order_ref",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "maintenance_recommendations_machine_status_idx": {
+          "name": "maintenance_recommendations_machine_status_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "suggested_status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "maintenance_recommendations_machine_id_machines_machine_id_fk": {
+          "name": "maintenance_recommendations_machine_id_machines_machine_id_fk",
+          "tableFrom": "maintenance_recommendations",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "maintenance_recommendations_linked_finding_id_diagnostic_findings_finding_id_fk": {
+          "name": "maintenance_recommendations_linked_finding_id_diagnostic_findings_finding_id_fk",
+          "tableFrom": "maintenance_recommendations",
+          "tableTo": "diagnostic_findings",
+          "columnsFrom": [
+            "linked_finding_id"
+          ],
+          "columnsTo": [
+            "finding_id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.maintenance_work_orders": {
+      "name": "maintenance_work_orders",
+      "schema": "",
+      "columns": {
+        "work_order_id": {
+          "name": "work_order_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "task_title": {
+          "name": "task_title",
+          "type": "varchar(240)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "maintenance_type": {
+          "name": "maintenance_type",
+          "type": "work_order_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assigned_team": {
+          "name": "assigned_team",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lead_engineer": {
+          "name": "lead_engineer",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scheduled_window": {
+          "name": "scheduled_window",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "estimated_duration": {
+          "name": "estimated_duration",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "work_order_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'scheduled'"
+        },
+        "priority": {
+          "name": "priority",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "trigger_alert_id": {
+          "name": "trigger_alert_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "work_orders_machine_status_idx": {
+          "name": "work_orders_machine_status_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "status",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "maintenance_work_orders_machine_id_machines_machine_id_fk": {
+          "name": "maintenance_work_orders_machine_id_machines_machine_id_fk",
+          "tableFrom": "maintenance_work_orders",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sensor_channels": {
+      "name": "sensor_channels",
+      "schema": "",
+      "columns": {
+        "channel_id": {
+          "name": "channel_id",
+          "type": "varchar(96)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metric_key": {
+          "name": "metric_key",
+          "type": "sensor_metric_key",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "channel_code": {
+          "name": "channel_code",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "current_reading": {
+          "name": "current_reading",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unit": {
+          "name": "unit",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "severity_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'nominal'"
+        },
+        "normal_range_text": {
+          "name": "normal_range_text",
+          "type": "varchar(120)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "warning_threshold": {
+          "name": "warning_threshold",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "critical_threshold": {
+          "name": "critical_threshold",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nominal_reference": {
+          "name": "nominal_reference",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "threshold_exceeded": {
+          "name": "threshold_exceeded",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "exceeded_summary": {
+          "name": "exceeded_summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "sensor_channels_machine_metric_unique_idx": {
+          "name": "sensor_channels_machine_metric_unique_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "metric_key",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "sensor_channels_machine_idx": {
+          "name": "sensor_channels_machine_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sensor_channels_machine_id_machines_machine_id_fk": {
+          "name": "sensor_channels_machine_id_machines_machine_id_fk",
+          "tableFrom": "sensor_channels",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sites": {
+      "name": "sites",
+      "schema": "",
+      "columns": {
+        "plant_code": {
+          "name": "plant_code",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "plant_name": {
+          "name": "plant_name",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary_sector_code": {
+          "name": "primary_sector_code",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gateway_node": {
+          "name": "gateway_node",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gateway_sync_percent": {
+          "name": "gateway_sync_percent",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 99.98
+        },
+        "status_label": {
+          "name": "status_label",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'SYSTEM NOMINAL'"
+        },
+        "uptime_percent": {
+          "name": "uptime_percent",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 98.4
+        },
+        "sampling_rate_hz": {
+          "name": "sampling_rate_hz",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 25600
+        },
+        "active_model_build": {
+          "name": "active_model_build",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_sync_display_utc": {
+          "name": "last_sync_display_utc",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_sync_at": {
+          "name": "last_sync_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.subsystem_health_rollups": {
+      "name": "subsystem_health_rollups",
+      "schema": "",
+      "columns": {
+        "subsystem_id": {
+          "name": "subsystem_id",
+          "type": "varchar(64)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "asset_count": {
+          "name": "asset_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "health_percent": {
+          "name": "health_percent",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mean_rul_hours": {
+          "name": "mean_rul_hours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "severity_level",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary_metric_label": {
+          "name": "primary_metric_label",
+          "type": "varchar(96)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary_metric_value": {
+          "name": "primary_metric_value",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.telemetry_readings": {
+      "name": "telemetry_readings",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "machine_id": {
+          "name": "machine_id",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time_range": {
+          "name": "time_range",
+          "type": "time_range_window",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sample_index": {
+          "name": "sample_index",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp_label": {
+          "name": "timestamp_label",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "recorded_at": {
+          "name": "recorded_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "temperature_c": {
+          "name": "temperature_c",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vibration_rms": {
+          "name": "vibration_rms",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rpm": {
+          "name": "rpm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "acoustic_db": {
+          "name": "acoustic_db",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "anomaly_probability": {
+          "name": "anomaly_probability",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_forecast": {
+          "name": "is_forecast",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "data_origin": {
+          "name": "data_origin",
+          "type": "data_origin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development_fixture'"
+        },
+        "is_fixture_seed": {
+          "name": "is_fixture_seed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {
+        "telemetry_readings_machine_range_sample_unique_idx": {
+          "name": "telemetry_readings_machine_range_sample_unique_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "time_range",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "sample_index",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "telemetry_readings_machine_range_idx": {
+          "name": "telemetry_readings_machine_range_idx",
+          "columns": [
+            {
+              "expression": "machine_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "time_range",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "telemetry_readings_recorded_at_idx": {
+          "name": "telemetry_readings_recorded_at_idx",
+          "columns": [
+            {
+              "expression": "recorded_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "telemetry_readings_machine_id_machines_machine_id_fk": {
+          "name": "telemetry_readings_machine_id_machines_machine_id_fk",
+          "tableFrom": "telemetry_readings",
+          "tableTo": "machines",
+          "columnsFrom": [
+            "machine_id"
+          ],
+          "columnsTo": [
+            "machine_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.data_origin": {
+      "name": "data_origin",
+      "schema": "public",
+      "values": [
+        "development_fixture",
+        "rule_evaluated",
+        "operational_telemetry"
+      ]
+    },
+    "public.diagnostic_finding_status": {
+      "name": "diagnostic_finding_status",
+      "schema": "public",
+      "values": [
+        "open",
+        "under_review",
+        "action_planned",
+        "resolved"
+      ]
+    },
+    "public.diagnostic_review_state": {
+      "name": "diagnostic_review_state",
+      "schema": "public",
+      "values": [
+        "requires_review",
+        "in_review",
+        "verified_baseline"
+      ]
+    },
+    "public.diagnostic_severity": {
+      "name": "diagnostic_severity",
+      "schema": "public",
+      "values": [
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "public.event_severity": {
+      "name": "event_severity",
+      "schema": "public",
+      "values": [
+        "nominal",
+        "warning",
+        "critical",
+        "info"
+      ]
+    },
+    "public.fleet_maintenance_status": {
+      "name": "fleet_maintenance_status",
+      "schema": "public",
+      "values": [
+        "up_to_date",
+        "scheduled",
+        "in_progress",
+        "overdue"
+      ]
+    },
+    "public.fleet_operating_status": {
+      "name": "fleet_operating_status",
+      "schema": "public",
+      "values": [
+        "operational",
+        "warning",
+        "critical",
+        "maintenance"
+      ]
+    },
+    "public.recommendation_status": {
+      "name": "recommendation_status",
+      "schema": "public",
+      "values": [
+        "pending_review",
+        "approved_local",
+        "scheduled",
+        "completed"
+      ]
+    },
+    "public.rotor_configuration": {
+      "name": "rotor_configuration",
+      "schema": "public",
+      "values": [
+        "turbine",
+        "spindle",
+        "compressor",
+        "pump",
+        "press"
+      ]
+    },
+    "public.sensor_metric_key": {
+      "name": "sensor_metric_key",
+      "schema": "public",
+      "values": [
+        "vibration",
+        "temperature",
+        "rpm",
+        "acoustic"
+      ]
+    },
+    "public.severity_level": {
+      "name": "severity_level",
+      "schema": "public",
+      "values": [
+        "nominal",
+        "warning",
+        "critical"
+      ]
+    },
+    "public.time_range_window": {
+      "name": "time_range_window",
+      "schema": "public",
+      "values": [
+        "1H",
+        "6H",
+        "24H",
+        "7D"
+      ]
+    },
+    "public.work_order_status": {
+      "name": "work_order_status",
+      "schema": "public",
+      "values": [
+        "in_progress",
+        "scheduled",
+        "completed"
+      ]
+    },
+    "public.work_order_type": {
+      "name": "work_order_type",
+      "schema": "public",
+      "values": [
+        "Predictive",
+        "Corrective",
+        "Calibration",
+        "Inspection"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -8,6 +8,13 @@
       "when": 1792303406676,
       "tag": "0000_supreme_longshot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793213107336,
+      "tag": "0001_fantastic_night_thrasher",
+      "breakpoints": true
     }
   ]
 }

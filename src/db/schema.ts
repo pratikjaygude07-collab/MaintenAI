@@ -603,3 +603,46 @@ export const subsystemHealthRollups = pgTable("subsystem_health_rollups", {
     .default("development_fixture"),
   isFixtureSeed: boolean("is_fixture_seed").notNull().default(true),
 });
+
+// ============================================================================
+// 13. AI4I 2020 PREDICTIVE MAINTENANCE DATASET RECORDS
+// ============================================================================
+// Synthetic dataset from UCI Machine Learning Repository (CC BY 4.0).
+// Source: https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
+// This table stores raw imported records with full provenance. It does NOT
+// fabricate vibration, acoustic, or other sensor fields absent from the source.
+
+export const ai4iTelemetryRecords = pgTable("ai4i_telemetry_records", {
+  id: serial("id").primaryKey(),
+  udi: integer("udi").notNull(),
+  productId: varchar("product_id", { length: 32 }).notNull(),
+  type: varchar("type", { length: 2 }).notNull(), // "L" | "M" | "H"
+  airTemperatureK: doublePrecision("air_temperature_k").notNull(), // Kelvin
+  processTemperatureK: doublePrecision("process_temperature_k").notNull(), // Kelvin
+  rotationalSpeedRpm: integer("rotational_speed_rpm").notNull(),
+  torqueNm: doublePrecision("torque_nm").notNull(), // Newton-meters
+  toolWearMin: integer("tool_wear_min").notNull(), // minutes
+  machineFailure: boolean("machine_failure").notNull(),
+  twf: boolean("twf").notNull(), // Tool Wear Failure
+  hdf: boolean("hdf").notNull(), // Heat Dissipation Failure
+  pwf: boolean("pwf").notNull(), // Power Failure
+  osf: boolean("osf").notNull(), // Overstrain Failure
+  rnf: boolean("rnf").notNull(), // Random Failure
+  dataOrigin: dataOriginEnum("data_origin")
+    .notNull()
+    .default("operational_telemetry"),
+  isFixtureSeed: boolean("is_fixture_seed").notNull().default(false),
+  importedAt: timestamp("imported_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  sourceFile: varchar("source_file", { length: 255 }).notNull(),
+  sourceDataset: varchar("source_dataset", { length: 64 })
+    .notNull()
+    .default("ai4i_2020"),
+}, (table) => [
+  uniqueIndex("ai4i_records_udi_unique_idx").on(table.udi),
+  index("ai4i_records_product_id_idx").on(table.productId),
+  index("ai4i_records_type_idx").on(table.type),
+  index("ai4i_records_machine_failure_idx").on(table.machineFailure),
+  index("ai4i_records_imported_at_idx").on(table.importedAt),
+]);

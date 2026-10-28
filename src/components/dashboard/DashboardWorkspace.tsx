@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type {
+  Ai4iDatasetSummary,
   AssetSummaryMetric,
   FleetHealthBucket,
   MaintenanceWorkOrder,
@@ -17,6 +18,7 @@ import {
   StatusBadge,
 } from "@/components/ui/IndustrialPrimitives";
 import { AssetSummaryCards } from "@/components/dashboard/AssetSummaryCards";
+import { Ai4iDatasetPanel } from "@/components/dashboard/Ai4iDatasetPanel";
 import { SensorTrendCharts } from "@/components/dashboard/SensorTrendCharts";
 import { FleetHealthOverview } from "@/components/dashboard/FleetHealthOverview";
 import { RecentAlertsPanel } from "@/components/dashboard/RecentAlertsPanel";
@@ -29,6 +31,10 @@ interface DashboardWorkspaceProps {
   subsystems: SubsystemHealthSummary[];
   alerts: PredictiveAlert[];
   workOrders: MaintenanceWorkOrder[];
+  ai4iSummary?: Ai4iDatasetSummary | null;
+  ai4iStatus?: "ready" | "empty" | "error" | "unavailable";
+  ai4iErrorCode?: string;
+  ai4iErrorMessage?: string;
 }
 
 type DashboardViewState = "ready" | "loading" | "unavailable" | "error";
@@ -40,6 +46,10 @@ export function DashboardWorkspace({
   subsystems,
   alerts,
   workOrders,
+  ai4iSummary = null,
+  ai4iStatus = "unavailable",
+  ai4iErrorCode,
+  ai4iErrorMessage,
 }: DashboardWorkspaceProps) {
   const [viewState, setViewState] = useState<DashboardViewState>("ready");
 
@@ -165,6 +175,16 @@ export function DashboardWorkspace({
             <div className="col-span-12 lg:col-span-6">
               <MaintenanceActivityPanel workOrders={workOrders} />
             </div>
+          </div>
+
+          {/* Row 4: AI4I Synthetic Dataset Summary */}
+          <div className="col-span-12">
+            <Ai4iDatasetPanel
+              summary={ai4iSummary}
+              status={ai4iStatus}
+              errorCode={ai4iErrorCode}
+              errorMessage={ai4iErrorMessage}
+            />
           </div>
         </>
       )}
